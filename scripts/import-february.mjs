@@ -47,20 +47,20 @@ const CATEGORY_MAP = {
   'Вихідна їжа':  { category: 'Їжа',            subcategory: 'Вихідна їжа' },
   "Кав'ярні":     { category: 'Їжа',            subcategory: "Кав'ярні" },
   'Твікс':         { category: 'Їжа',            subcategory: 'Твікс' },
-  'Таксі + Бенз': { category: 'Таксі + Бенз',   subcategory: 'Загальне' },
-  'Одяг, взуття': { category: 'Одяг та взуття',  subcategory: 'Загальне' },
-  'Must have':     { category: 'Must have',       subcategory: 'Загальне' },
-  'Хімія, etc.':  { category: 'Хімія, etc.',     subcategory: 'Загальне' },
-  'Донати':        { category: 'Донати',          subcategory: 'Загальне' },
+  'Таксі + Бенз': { category: 'Таксі + Бенз',   subcategory: '' },
+  'Одяг, взуття': { category: 'Одяг та взуття',  subcategory: '' },
+  'Must have':     { category: 'Must have',       subcategory: '' },
+  'Хімія, etc.':  { category: 'Хімія, etc.',     subcategory: '' },
+  'Донати':        { category: 'Донати',          subcategory: '' },
   'Психологи':     { category: "Здоров'я",        subcategory: 'Психологи' },
-  "Здоров'я":     { category: "Здоров'я",        subcategory: 'Загальне' },
-  'Розваги':       { category: 'Розваги',         subcategory: 'Загальне' },
-  'Інше':          { category: 'Інше',            subcategory: 'Загальне' },
+  "Здоров'я":     { category: "Здоров'я",        subcategory: '' },
+  'Розваги':       { category: 'Розваги',         subcategory: '' },
+  'Інше':          { category: 'Інше',            subcategory: '' },
 };
 
 // --- Build expense rows ---
 const expenses = RAW.map(([date, rawCat, amount, description]) => {
-  const mapped = CATEGORY_MAP[rawCat] ?? { category: rawCat, subcategory: 'Загальне' };
+  const mapped = CATEGORY_MAP[rawCat] ?? { category: rawCat, subcategory: '' };
   return {
     id: randomUUID(),
     date,

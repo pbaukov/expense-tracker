@@ -31,7 +31,7 @@ export class ExpenseFormComponent implements OnInit {
     this.form = this.fb.group({
       date: [initial?.date ?? new Date().toISOString().split('T')[0], Validators.required],
       category: [initial?.category ?? '', Validators.required],
-      subcategory: [initial?.subcategory ?? '', Validators.required],
+      subcategory: [initial?.subcategory ?? ''],
       amount: [initial?.amount ?? '', [Validators.required, Validators.min(0.01)]],
       description: [initial?.description ?? '']
     });

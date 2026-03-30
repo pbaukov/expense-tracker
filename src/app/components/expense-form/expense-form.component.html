@@ -17,12 +17,12 @@
       <mat-error *ngIf="form.get('category')?.hasError('required')">Обов'язкове поле</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" *ngIf="subcategories.length">
       <mat-label>Субкатегорія</mat-label>
-      <mat-select formControlName="subcategory" [disabled]="!subcategories.length">
+      <mat-select formControlName="subcategory">
+        <mat-option value="">—</mat-option>
         <mat-option *ngFor="let sub of subcategories" [value]="sub">{{ sub }}</mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('subcategory')?.hasError('required')">Обов'язкове поле</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
