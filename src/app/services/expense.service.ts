@@ -42,7 +42,7 @@ export class ExpenseService {
       this.expenses$.next(expenses);
     } catch (err: any) {
       // If file doesn't exist yet, start with empty list
-      if (err?.error?.error_summary?.startsWith('path/not_found')) {
+      if (err?.error_summary?.startsWith('path/not_found')) {
         this.expenses$.next([]);
         await this.persist([]);
       } else {
