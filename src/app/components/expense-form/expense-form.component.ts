@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Expense, EXPENSE_CATEGORIES } from '../../models/expense.model';
+import { CATEGORIES, Expense } from '../../models/expense.model';
 
 export interface ExpenseFormData {
   expense?: Expense;
@@ -14,7 +14,8 @@ export interface ExpenseFormData {
 })
 export class ExpenseFormComponent implements OnInit {
   form!: FormGroup;
-  categories = EXPENSE_CATEGORIES;
+  categoryNames = Object.keys(CATEGORIES);
+  subcategories: string[] = [];
   isEdit = false;
 
   constructor(
@@ -25,11 +26,25 @@ export class ExpenseFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.isEdit = !!this.data?.expense;
+    const initial = this.data?.expense;
+
     this.form = this.fb.group({
-      date: [this.data?.expense?.date ?? new Date().toISOString().split('T')[0], Validators.required],
-      amount: [this.data?.expense?.amount ?? '', [Validators.required, Validators.min(0.01)]],
-      category: [this.data?.expense?.category ?? '', Validators.required],
-      description: [this.data?.expense?.description ?? '', Validators.required]
+      date: [initial?.date ?? new Date().toISOString().split('T')[0], Validators.required],
+      category: [initial?.category ?? '', Validators.required],
+      subcategory: [initial?.subcategory ?? '', Validators.required],
+      amount: [initial?.amount ?? '', [Validators.required, Validators.min(0.01)]],
+      description: [initial?.description ?? '']
+    });
+
+    // Populate subcategories if editing
+    if (initial?.category) {
+      this.subcategories = CATEGORIES[initial.category] ?? [];
+    }
+
+    // React to category changes
+    this.form.get('category')!.valueChanges.subscribe(cat => {
+      this.subcategories = CATEGORIES[cat] ?? [];
+      this.form.get('subcategory')!.setValue('');
     });
   }
 

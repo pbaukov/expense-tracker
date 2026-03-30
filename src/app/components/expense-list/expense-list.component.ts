@@ -14,7 +14,7 @@ import { ExpenseFormComponent } from '../expense-form/expense-form.component';
   styleUrls: ['./expense-list.component.scss']
 })
 export class ExpenseListComponent implements OnInit, OnDestroy {
-  displayedColumns = ['date', 'category', 'description', 'amount', 'actions'];
+  displayedColumns = ['date', 'category', 'subcategory', 'description', 'amount', 'actions'];
   dataSource = new MatTableDataSource<Expense>();
   total = 0;
   syncing = false;
@@ -52,31 +52,31 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   }
 
   openAdd(): void {
-    const ref = this.dialog.open(ExpenseFormComponent, { width: '480px' });
+    const ref = this.dialog.open(ExpenseFormComponent, { width: '420px' });
     ref.afterClosed().subscribe(async result => {
       if (result) {
         await this.expenseService.add(result);
-        this.snackBar.open('Expense added', '', { duration: 2000 });
+        this.snackBar.open('Витрату додано', '', { duration: 2000 });
       }
     });
   }
 
   openEdit(expense: Expense): void {
     const ref = this.dialog.open(ExpenseFormComponent, {
-      width: '480px',
+      width: '420px',
       data: { expense }
     });
     ref.afterClosed().subscribe(async result => {
       if (result) {
         await this.expenseService.update({ ...result, id: expense.id });
-        this.snackBar.open('Expense updated', '', { duration: 2000 });
+        this.snackBar.open('Витрату оновлено', '', { duration: 2000 });
       }
     });
   }
 
   async delete(expense: Expense): Promise<void> {
     await this.expenseService.remove(expense.id);
-    this.snackBar.open('Expense deleted', '', { duration: 2000 });
+    this.snackBar.open('Витрату видалено', '', { duration: 2000 });
   }
 
   applyFilter(event: Event): void {

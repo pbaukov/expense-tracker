@@ -1,20 +1,19 @@
 export interface Expense {
   id: string;
-  date: string;       // ISO date string YYYY-MM-DD
+  date: string;
   amount: number;
   category: string;
+  subcategory: string;
   description: string;
 }
 
-export const EXPENSE_CATEGORIES = [
-  'Food & Dining',
-  'Transport',
-  'Housing',
-  'Utilities',
-  'Healthcare',
-  'Entertainment',
-  'Shopping',
-  'Travel',
-  'Education',
-  'Other'
-];
+export const CATEGORIES: Record<string, string[]> = {
+  'Таксі + Бенз': ['Таксі', 'Бензин', 'Паркування'],
+  'Їжа та напої': ['Продукти', 'Ресторан / Кафе', 'Доставка', 'Кава'],
+  'Житло': ['Оренда', 'Комунальні послуги', 'Інтернет / ТВ', 'Ремонт'],
+  'Здоров\'я': ['Ліки', 'Лікар', 'Спортзал'],
+  'Розваги': ['Кіно / Театр', 'Підписки', 'Ігри', 'Відпочинок'],
+  'Одяг та взуття': ['Одяг', 'Взуття', 'Аксесуари'],
+  'Освіта': ['Курси', 'Книги', 'Інше'],
+  'Інше': ['Інше']
+};
