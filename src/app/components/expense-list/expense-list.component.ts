@@ -44,6 +44,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+    this.sort.sort({ id: 'date', start: 'desc', disableClear: false });
   }
 
   ngOnDestroy(): void {
