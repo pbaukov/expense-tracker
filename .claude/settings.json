@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ng generate:*)",
+      "Bash(gh repo:*)",
+      "Bash(where gh:*)",
+      "Read(//c//**)",
+      "Read(//c/Users/pavlo.baukov/AppData/Local/Programs//**)",
+      "Bash(ng build:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(node scripts/import-february.mjs)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://api.dropboxapi.com)"
+    ]
+  }
+}
