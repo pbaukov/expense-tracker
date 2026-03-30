@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import * as Papa from 'papaparse';
 import { v4 as uuidv4 } from 'uuid';
 import { Expense } from '../models/expense.model';
-import { DropboxService } from './dropbox.service';
+import { DropboxNotFoundError, DropboxService } from './dropbox.service';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -41,8 +41,8 @@ export class ExpenseService {
       }));
       this.expenses$.next(expenses);
     } catch (err: any) {
-      // If file doesn't exist yet, start with empty list
-      if (err?.error_summary?.startsWith('path/not_found')) {
+      if (err instanceof DropboxNotFoundError) {
+        // File doesn't exist yet — create it
         this.expenses$.next([]);
         await this.persist([]);
       } else {

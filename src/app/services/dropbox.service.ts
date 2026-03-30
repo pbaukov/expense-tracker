@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
-const API = 'https://api.dropboxapi.com/2';
 const CONTENT_API = 'https://content.dropboxapi.com/2';
+
+export class DropboxNotFoundError extends Error {
+  constructor() { super('File not found in Dropbox'); }
+}
 
 @Injectable({ providedIn: 'root' })
 export class DropboxService {
@@ -19,9 +22,12 @@ export class DropboxService {
       }
     });
 
+    if (response.status === 409) {
+      throw new DropboxNotFoundError();
+    }
+
     if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      throw err;
+      throw new Error(`Dropbox error ${response.status}`);
     }
 
     return response.text();
@@ -39,7 +45,7 @@ export class DropboxService {
     });
 
     if (!response.ok) {
-      throw await response.json().catch(() => ({}));
+      throw new Error(`Dropbox write error ${response.status}`);
     }
   }
 }
