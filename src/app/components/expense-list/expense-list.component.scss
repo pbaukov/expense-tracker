@@ -1,0 +1,65 @@
+.container {
+  max-width: 1000px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fdecea;
+  color: #b71c1c;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.summary-card {
+  margin-bottom: 16px;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .label {
+    display: block;
+    color: rgba(0,0,0,.54);
+    font-size: 14px;
+  }
+
+  .total {
+    font-size: 28px;
+    font-weight: 600;
+  }
+
+  .actions-top {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+.filter-field {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+  }
+}
+
+.amount {
+  font-weight: 500;
+}
+
+.no-data {
+  text-align: center;
+  padding: 32px;
+  color: rgba(0,0,0,.4);
+}

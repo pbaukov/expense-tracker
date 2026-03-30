@@ -1,0 +1,86 @@
+<div class="container">
+  <!-- Sync status bar -->
+  <mat-progress-bar *ngIf="syncing" mode="indeterminate"></mat-progress-bar>
+
+  <div class="error-banner" *ngIf="error">
+    <mat-icon>error_outline</mat-icon> {{ error }}
+  </div>
+
+  <!-- Summary card -->
+  <mat-card class="summary-card">
+    <mat-card-content>
+      <div class="summary">
+        <div>
+          <span class="label">Total expenses</span>
+          <span class="total">${{ total | number:'1.2-2' }}</span>
+        </div>
+        <div class="actions-top">
+          <button mat-stroked-button (click)="expenseService.sync()" [disabled]="syncing" matTooltip="Sync now">
+            <mat-icon>sync</mat-icon> Sync
+          </button>
+          <button mat-raised-button color="primary" (click)="openAdd()">
+            <mat-icon>add</mat-icon> Add Expense
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Filter -->
+  <mat-form-field appearance="outline" class="filter-field">
+    <mat-label>Filter expenses</mat-label>
+    <input matInput (input)="applyFilter($event)" placeholder="Search by description, category..." />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <!-- Table -->
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+        <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let row">
+          <mat-chip-listbox>
+            <mat-chip>{{ row.category }}</mat-chip>
+          </mat-chip-listbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+        <td mat-cell *matCellDef="let row">{{ row.description }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+        <td mat-cell *matCellDef="let row" class="amount">${{ row.amount | number:'1.2-2' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button (click)="openEdit(row)" matTooltip="Edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="delete(row)" matTooltip="Delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data" [attr.colspan]="displayedColumns.length">
+          No expenses found. Add your first one!
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
