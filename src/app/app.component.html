@@ -1,6 +1,22 @@
 <mat-toolbar color="primary">
   <mat-icon>account_balance_wallet</mat-icon>
-  <span style="margin-left: 8px;">Облік витрат</span>
+  <span style="margin-left: 8px; flex: 1">Облік витрат</span>
+  <button *ngIf="auth.isAuthenticated" mat-icon-button (click)="auth.logout()" matTooltip="Вийти">
+    <mat-icon>logout</mat-icon>
+  </button>
 </mat-toolbar>
 
-<app-expense-list></app-expense-list>
+<ng-container *ngIf="ready">
+  <app-expense-list *ngIf="auth.isAuthenticated; else loginScreen"></app-expense-list>
+</ng-container>
+
+<ng-template #loginScreen>
+  <div class="login-screen">
+    <mat-icon class="login-icon">account_balance_wallet</mat-icon>
+    <h2>Облік витрат</h2>
+    <p>Увійдіть через Dropbox для синхронізації даних</p>
+    <button mat-raised-button color="primary" (click)="auth.startLogin()">
+      <mat-icon>cloud</mat-icon> Увійти через Dropbox
+    </button>
+  </div>
+</ng-template>
